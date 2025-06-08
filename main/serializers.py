@@ -11,4 +11,8 @@ from main.models import *
 
 
 
-
+class ActorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Actor
+        fields = '__all__'
+        read_only_fields = ('id',)
