@@ -8,4 +8,6 @@ urlpatterns = [
     path('hello/', HelloApiView.as_view()),
     path('actors/', ActorsAPIView.as_view()),
     path('actors/<int:pk>/', ActorRetrieveUpdateDeleteAPIView.as_view()),
+    path('subscriptions/', SubscriptionAPIView.as_view()),
+    path('subscriptions/<int:pk>/', SubscriptionRetrieveUpdateDeleteAPIView.as_view()),
 ]

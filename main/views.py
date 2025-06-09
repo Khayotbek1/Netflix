@@ -87,3 +87,40 @@ class ActorRetrieveUpdateDeleteAPIView(APIView):
         actor = self.get_object(pk)
         actor.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class SubscriptionAPIView(APIView):
+    def get(self, request):
+        subscriptions = Subscription.objects.all()
+        serializer = SubjectSerializer(subscriptions, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = SubjectSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+
+
+class SubscriptionRetrieveUpdateDeleteAPIView(APIView):
+    def get_object(self, pk):
+        return get_object_or_404(Subscription, pk=pk)
+
+    def get(self, request, pk):
+        subscription = self.get_object(pk)
+        serializer = SubjectSerializer(subscription)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        subscription = self.get_object(pk)
+        serializer = SubjectSerializer(subscription, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+
+    def delete(self, request, pk):
+        subscription = self.get_object(pk)
+        subscription.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

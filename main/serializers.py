@@ -16,3 +16,10 @@ class ActorSerializer(serializers.ModelSerializer):
         model = Actor
         fields = '__all__'
         read_only_fields = ('id',)
+
+
+class SubjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscription
+        fields = '__all__'
+        read_only_fields = ('id',)
