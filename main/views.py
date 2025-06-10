@@ -62,7 +62,7 @@ class ActorsAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ActorRetrieveUpdateDeleteAPIView(APIView):
     def get_object(self, pk):
@@ -104,7 +104,7 @@ class SubscriptionAPIView(APIView):
 
 
 class SubscriptionRetrieveUpdateDeleteAPIView(APIView):
-    def get_object(self, pk):
+    def get_object(self,  pk):
         return get_object_or_404(Subscription, pk=pk)
 
     def get(self, request, pk):
@@ -120,7 +120,45 @@ class SubscriptionRetrieveUpdateDeleteAPIView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors)
 
-    def delete(self, request, pk):
+    def delete(self, pk):
         subscription = self.get_object(pk)
         subscription.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class MoviesAPIView(APIView):
+    def get(self, request):
+       movies = Movie.objects.all()
+       serializer = MovieSerializer(movies, many=True)
+       return Response(serializer.data)
+
+    def post(self, request):
+        serializer = MovieSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class MovieRetrieveUpdateDeleteAPIView(APIView):
+    def get_object(self, pk):
+        return get_object_or_404(Movie, pk=pk)
+
+    def get(self, request, pk):
+        movie = self.get_object(pk)
+        serializer = MovieSerializer(movie)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        movie = self.get_object(pk)
+        serializer = MovieSerializer(movie, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        movie = self.get_object(pk)
+        movie.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+

@@ -10,4 +10,7 @@ urlpatterns = [
     path('actors/<int:pk>/', ActorRetrieveUpdateDeleteAPIView.as_view()),
     path('subscriptions/', SubscriptionAPIView.as_view()),
     path('subscriptions/<int:pk>/', SubscriptionRetrieveUpdateDeleteAPIView.as_view()),
+    path('movies/', MoviesAPIView.as_view()),
+    path('movies/<int:pk>/', MovieRetrieveUpdateDeleteAPIView.as_view()),
+
 ]
