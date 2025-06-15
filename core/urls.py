@@ -1,16 +1,16 @@
-
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from main.views import *
+
+router = DefaultRouter()
+router.register('actors', ActorViewSet)
+router.register('movies', MovieViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('hello/', HelloApiView.as_view()),
-    path('actors/', ActorsAPIView.as_view()),
-    path('actors/<int:pk>/', ActorRetrieveUpdateDeleteAPIView.as_view()),
     path('subscriptions/', SubscriptionAPIView.as_view()),
     path('subscriptions/<int:pk>/', SubscriptionRetrieveUpdateDeleteAPIView.as_view()),
-    path('movies/', MoviesAPIView.as_view()),
-    path('movies/<int:pk>/', MovieRetrieveUpdateDeleteAPIView.as_view()),
+    path('', include(router.urls))
 
 ]
